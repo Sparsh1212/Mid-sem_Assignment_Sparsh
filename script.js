@@ -29,8 +29,8 @@ quoteInputElement.addEventListener('input',()=>{
   if(correct) {
    
     function finished(){
-
-    quoteDisplayElement.innerText='Congratulations!!! '+x+' Your score: '+getTimerTime();
+    
+    quoteDisplayElement.innerText='Congratulations!!! '+x+' Your score: '+Math.ceil(arrayQuote.length/getTimerTime())+' chars/s';
     quoteInputElement.style.display='none';
     timerElement.style.display='none';
       //  renderNewQuote()
