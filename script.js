@@ -1,5 +1,5 @@
 var x=prompt('Welcome !! Please enter your name');
-const random_Quote_Api_Url = 'http://quotes.stormconsultancy.co.uk/random.json';
+const random_Quote_Api_Url = 'https://api.quotable.io/random';
 const quoteDisplayElement = document.getElementById('quote-display');
 const quoteInputElement=document.getElementById('quoteInput');
 const timerElement=document.getElementById('timer');
@@ -43,7 +43,7 @@ quoteInputElement.addEventListener('input',()=>{
 function getRandomQuote(){
 return fetch(random_Quote_Api_Url)
 .then(response => response.json())
-.then(data => data.quote)
+.then(data => data.content)
 
 
 }
