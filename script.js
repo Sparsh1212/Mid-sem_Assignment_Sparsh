@@ -64,7 +64,7 @@ quoteInputElement.addEventListener('input',()=>{
     function finished(){
     bleep2.play();
     
-    quoteDisplayElement.innerText='Congratulations!! '+x+'    Your current score: '+Math.ceil(words/mins);+' wpm';
+    quoteDisplayElement.innerText='Congratulations!! '+x+'    Your current score: '+Math.ceil(words/mins)+' wpm';
     highdiv.innerHTML='HIGH SCORE: '+highscore+' wpm';
     averagediv.innerHTML='AVERAGE SCORE: '+avg+' wpm';
     highdiv.style.display="block";
