@@ -6,6 +6,7 @@ var bleep2=new Audio();
 bleep2.src="/home/sparsh/Desktop/Speed_Typing_Game/applause4.mp3"
 var score=[];
 var counter=-1;
+
 var avg=0;
 var sum=0;
 const averagediv=document.getElementById('avg');
@@ -16,6 +17,8 @@ const quoteInputElement=document.getElementById('quoteInput');
 const timerElement=document.getElementById('timer');
 
 quoteInputElement.addEventListener('input',()=>{
+  var words=0;
+  var mins=0;
   const arrayQuote=quoteDisplayElement.querySelectorAll('span')
   const arrayValue=quoteInputElement.value.split('')
   let correct=true
@@ -39,7 +42,15 @@ quoteInputElement.addEventListener('input',()=>{
   })
   if(correct) {
    counter++;
-    score[counter]=Math.ceil(arrayQuote.length/getTimerTime());
+    for(var k=0;k<arrayQuote.length;k++){
+      if(arrayQuote[k].innerHTML==' ')
+      words++;
+    }
+    words++;
+    console.log(words);
+    mins=getTimerTime()/60;
+    
+    score[counter]=Math.ceil(words/mins);
     var highscore=score[0];
     sum+=score[counter];
     avg=Math.ceil(sum/score.length);
@@ -53,9 +64,9 @@ quoteInputElement.addEventListener('input',()=>{
     function finished(){
     bleep2.play();
     
-    quoteDisplayElement.innerText='Congratulations!! '+x+'    Your current score: '+Math.ceil(arrayQuote.length/getTimerTime())+' chars/s';
-    highdiv.innerHTML='HIGH SCORE: '+highscore;
-    averagediv.innerHTML='AVERAGE SCORE: '+avg;
+    quoteDisplayElement.innerText='Congratulations!! '+x+'    Your current score: '+Math.ceil(words/mins);+' wpm';
+    highdiv.innerHTML='HIGH SCORE: '+highscore+' wpm';
+    averagediv.innerHTML='AVERAGE SCORE: '+avg+' wpm';
     highdiv.style.display="block";
     averagediv.style.display="block";
     function numberGenerator(){
@@ -124,7 +135,7 @@ function getTimerTime(){
      usernum=document.getElementById('user-guess').value; 
       if(usernum==num)
       {
-      sum+=score.length;
+      sum+=10*score.length;
       avg=Math.ceil(sum/score.length);
       averagediv.innerHTML='AVERAGE SCORE: '+avg;
       document.getElementById('luck').style.display="none";
@@ -137,7 +148,7 @@ function getTimerTime(){
 
       else{
       
-      sum-=score.length;
+      sum-=(10*score.length);
       avg=Math.ceil(sum/score.length);
       averagediv.innerHTML='AVERAGE SCORE: '+avg;
       document.getElementById('luck').style.display="none";
