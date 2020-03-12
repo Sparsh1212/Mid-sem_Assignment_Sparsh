@@ -1,4 +1,15 @@
 var x=prompt('Welcome !! Please enter your name');
+var num,usernum;
+var bleep1=new Audio();
+bleep1.src="/home/sparsh/Desktop/Speed_Typing_Game/button-2.mp3";
+var bleep2=new Audio();
+bleep2.src="/home/sparsh/Desktop/Speed_Typing_Game/applause4.mp3"
+var score=[];
+var counter=-1;
+var avg=0;
+var sum=0;
+const averagediv=document.getElementById('avg');
+const highdiv=document.getElementById('high');
 const random_Quote_Api_Url = 'https://api.quotable.io/random';
 const quoteDisplayElement = document.getElementById('quote-display');
 const quoteInputElement=document.getElementById('quoteInput');
@@ -27,10 +38,37 @@ quoteInputElement.addEventListener('input',()=>{
 
   })
   if(correct) {
-   
-    function finished(){
+   counter++;
+    score[counter]=Math.ceil(arrayQuote.length/getTimerTime());
+    var highscore=score[0];
+    sum+=score[counter];
+    avg=Math.ceil(sum/score.length);
+    for(j=0;j<score.length;j++){
+      if (score[j]>highscore)
+      highscore=score[j];
+    }
     
-    quoteDisplayElement.innerText='Congratulations!!! '+x+' Your score: '+Math.ceil(arrayQuote.length/getTimerTime())+' chars/s';
+    console.log(score);
+    console.log(avg);
+    function finished(){
+    bleep2.play();
+    
+    quoteDisplayElement.innerText='Congratulations!! '+x+'    Your current score: '+Math.ceil(arrayQuote.length/getTimerTime())+' chars/s';
+    highdiv.innerHTML='HIGH SCORE: '+highscore;
+    averagediv.innerHTML='AVERAGE SCORE: '+avg;
+    highdiv.style.display="block";
+    averagediv.style.display="block";
+    function numberGenerator(){
+      num=Math.floor((Math.random()*10)+1);
+    }
+    document.getElementById('luck').style.display="block";
+    numberGenerator();
+    
+  
+
+    
+
+
     quoteInputElement.style.display='none';
     timerElement.style.display='none';
       //  renderNewQuote()
@@ -49,7 +87,8 @@ return fetch(random_Quote_Api_Url)
 }
 
 async function renderNewQuote(){
-
+  document.getElementById('result').style.display="none";
+  document.getElementById('luck').style.display="none";
   quoteDisplayElement.style.display='block';
   quoteInputElement.style.display='block';
   timerElement.style.display='block';
@@ -81,6 +120,33 @@ function getTimerTime(){
     return Math.floor((new Date()-startTime)/1000)
 }
 
+    function comparator(){
+     usernum=document.getElementById('user-guess').value; 
+      if(usernum==num)
+      {
+      sum+=score.length;
+      avg=Math.ceil(sum/score.length);
+      averagediv.innerHTML='AVERAGE SCORE: '+avg;
+      document.getElementById('luck').style.display="none";
+      //document.getElementById('result').innerHTML="Yipeeee Your guess was correct";
+      document.getElementById('result').style.display="block";
+      document.getElementById('won').style.display="block";
+      document.getElementById('lose').style.display="none";
+    
+    }
+
+      else{
+      
+      sum-=score.length;
+      avg=Math.ceil(sum/score.length);
+      averagediv.innerHTML='AVERAGE SCORE: '+avg;
+      document.getElementById('luck').style.display="none";
+      //document.getElementById('result').innerHTML="Better luck next time";
+      document.getElementById('result').style.display="block";
+      document.getElementById('lose').style.display="block";
+      document.getElementById('won').style.display="none";
+      }
+    }
 
 
 
